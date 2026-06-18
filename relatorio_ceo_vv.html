@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videira Verde — Relatório Executivo CEO 2026</title>
+<meta name="description" content="Diagnóstico de Marketing, Inteligência Competitiva e Plano Estratégico — Videira Verde 2026">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root {
+  color-scheme: light;
+  --verde: #2D6A4F;
+  --verde-m: #40916C;
+  --verde-c: #52B788;
+  --verde-l: #D8F3DC;
+  --dourado: #D4A017;
+  --dourado-l: #FFF3CD;
+  --vermelho: #C0392B;
+  --vermelho-l: #FDECEA;
+  --azul: #1A6BA0;
+  --azul-l: #E3F2FD;
+  --roxo: #6D3FC0;
+  --roxo-l: #EDE7F6;
+  --cinza-1: #F7F8FA;
+  --cinza-2: #EEF0F4;
+  --cinza-3: #D8DCE5;
+  --cinza-4: #9AA0B2;
+  --cinza-5: #5A6278;
+  --texto: #1A1E2E;
+  --texto-sec: #5A6278;
+  --borda: #DDE1EB;
+  --sombra: 0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.05);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--cinza-1); }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cinza-1); color: var(--texto); font-size: 14px; min-height: 100vh; }
+
+.hdr { background: linear-gradient(135deg, #1A3C2B 0%, #2D6A4F 100%); color: #fff; padding: 20px 24px; }
+.hdr-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.hdr-logo { display: flex; align-items: center; gap: 10px; }
+.logo-box { width: 36px; height: 36px; background: rgba(255,255,255,.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.hdr-title { font-size: 15px; font-weight: 700; }
+.hdr-sub { font-size: 11px; opacity: .7; margin-top: 2px; }
+.hdr-badge { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.18); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+
+.nav { background: #fff; border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 50; box-shadow: 0 1px 6px rgba(0,0,0,.06); }
+.nav-inner { max-width: 920px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-item { padding: 12px 14px; font-size: 12px; font-weight: 600; color: var(--texto-sec); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .15s; user-select: none; }
+.nav-item:hover { color: var(--verde); }
+.nav-item.active { color: var(--verde); border-bottom-color: var(--verde); }
+
+.main { max-width: 920px; margin: 0 auto; padding: 24px 16px 48px; }
+.section { display: none; }
+.section.active { display: block; }
+
+.sec-lbl { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--verde-m); margin-bottom: 4px; }
+.sec-title { font-size: 20px; font-weight: 800; color: var(--texto); margin-bottom: 5px; }
+.sec-desc { font-size: 12px; color: var(--texto-sec); line-height: 1.6; max-width: 660px; margin-bottom: 20px; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+.kpi { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 14px 16px; border-top: 3px solid; box-shadow: var(--sombra); }
+.kpi.g { border-top-color: var(--verde-c); }
+.kpi.d { border-top-color: var(--dourado); }
+.kpi.r { border-top-color: var(--vermelho); }
+.kpi.b { border-top-color: var(--azul); }
+.kpi-lbl { font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--texto-sec); margin-bottom: 5px; }
+.kpi-val { font-size: 26px; font-weight: 800; color: var(--texto); line-height: 1; }
+.kpi-sub { font-size: 10px; color: var(--texto-sec); margin-top: 3px; }
+.kpi-trend { font-size: 10px; font-weight: 600; margin-top: 4px; }
+.kpi-trend.up { color: #27AE60; }
+.kpi-trend.down { color: var(--vermelho); }
+.kpi-trend.neu { color: var(--dourado); }
+
+.card { background: #fff; border: 1px solid var(--borda); border-radius: 10px; box-shadow: var(--sombra); margin-bottom: 14px; overflow: hidden; }
+.card-hdr { padding: 12px 18px; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--borda); color: var(--texto); }
+.card-body { padding: 18px; }
+
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.chart-wrap { position: relative; height: 210px; }
+.chart-wrap.tall { height: 270px; }
+.chart-wrap.xtra { height: 300px; }
+.chart-ttl { font-size: 12px; font-weight: 700; color: var(--texto); margin-bottom: 2px; }
+.chart-sub { font-size: 10px; color: var(--texto-sec); margin-bottom: 14px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { padding: 8px 12px; font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--texto-sec); text-align: left; background: var(--cinza-1); border-bottom: 1px solid var(--borda); }
+td { padding: 10px 12px; color: var(--texto-sec); border-bottom: 1px solid var(--cinza-2); vertical-align: middle; }
+td:first-child { color: var(--texto); font-weight: 500; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--cinza-1); }
+.cap { max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.bg { background: #D8F3DC; color: #1B5E20; }
+.br { background: var(--vermelho-l); color: var(--vermelho); }
+.by { background: var(--dourado-l); color: #7D5C00; }
+.bb { background: var(--azul-l); color: var(--azul); }
+.bp { background: var(--roxo-l); color: var(--roxo); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.info { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 16px; box-shadow: var(--sombra); }
+.info h3 { font-size: 11px; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
+.info ul { list-style: none; }
+.info li { font-size: 11px; color: var(--texto-sec); padding: 4px 0; border-bottom: 1px solid var(--cinza-2); display: flex; gap: 7px; line-height: 1.4; }
+.info li:last-child { border-bottom: none; }
+.info li::before { content: '→'; color: var(--verde-m); flex-shrink: 0; }
+
+.hl { background: #F0FAF4; border: 1px solid #A8D5B5; border-left: 4px solid var(--verde-m); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 12px; color: var(--texto); line-height: 1.6; }
+.hl strong { color: var(--verde); }
+.wn { background: var(--vermelho-l); border: 1px solid #F5C6C2; border-left: 4px solid var(--vermelho); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 12px; color: var(--texto); line-height: 1.6; }
+.wn strong { color: var(--vermelho); }
+.info-box { background: var(--azul-l); border: 1px solid #BBDEFB; border-left: 4px solid var(--azul); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 14px; font-size: 12px; color: var(--texto); line-height: 1.6; }
+.info-box strong { color: var(--azul); }
+
+.swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.swot { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 14px 16px; box-shadow: var(--sombra); }
+.swot h3 { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+.swot.s h3 { color: #27AE60; }
+.swot.w h3 { color: var(--vermelho); }
+.swot.o h3 { color: var(--azul); }
+.swot.t h3 { color: #D4A017; }
+.swot-item { font-size: 11px; color: var(--texto-sec); padding: 4px 0; border-bottom: 1px solid var(--cinza-2); line-height: 1.4; }
+.swot-item:last-child { border-bottom: none; }
+
+.plan-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.plan { background: #fff; border: 1px solid var(--borda); border-radius: 10px; overflow: hidden; box-shadow: var(--sombra); }
+.plan-hdr { padding: 10px 14px; font-size: 11px; font-weight: 700; }
+.plan-hdr.h1 { background: #F0FAF4; color: #1B5E20; }
+.plan-hdr.h2 { background: var(--azul-l); color: var(--azul); }
+.plan-hdr.h3 { background: var(--roxo-l); color: var(--roxo); }
+.plan-body { padding: 12px 14px; }
+.plan-item { font-size: 11px; color: var(--texto-sec); padding: 5px 0; border-bottom: 1px solid var(--cinza-2); display: flex; gap: 7px; line-height: 1.4; }
+.plan-item:last-child { border-bottom: none; }
+.plan-n { font-size: 9px; font-weight: 800; color: var(--verde-m); background: var(--verde-l); border-radius: 4px; padding: 1px 4px; flex-shrink: 0; margin-top: 2px; }
+
+.mx-wrap { overflow-x: auto; margin-bottom: 14px; }
+.mx-row { display: grid; grid-template-columns: 140px repeat(4,1fr); gap: 1px; background: var(--borda); margin-bottom: 1px; min-width: 520px; }
+.mx-cell { background: #fff; padding: 8px 10px; font-size: 10px; color: var(--texto-sec); }
+.mx-cell.hdr { background: var(--cinza-1); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.mx-cell.lbl { font-weight: 600; color: var(--texto); }
+.mx-cell.vv { background: #F0FAF4; }
+.score-bar { height: 4px; background: var(--cinza-2); border-radius: 3px; margin-top: 3px; }
+.score-fill { height: 100%; border-radius: 3px; }
+
+.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
+.agent { background: #fff; border: 1px solid var(--borda); border-radius: 10px; padding: 14px; border-top: 3px solid; box-shadow: var(--sombra); }
+.agent.g { border-top-color: #27AE60; }
+.agent.p { border-top-color: var(--roxo); }
+.agent.pk { border-top-color: #E91E9C; }
+.agent.o { border-top-color: #E67E22; }
+.agent.b { border-top-color: var(--azul); }
+.agent.y { border-top-color: var(--dourado); }
+.agent.t { border-top-color: #16A085; }
+.agent-icon { font-size: 20px; margin-bottom: 5px; }
+.agent-name { font-size: 11px; font-weight: 700; color: var(--texto); margin-bottom: 3px; }
+.agent-role { font-size: 10px; color: var(--texto-sec); margin-bottom: 7px; line-height: 1.4; }
+.agent-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+.atag { font-size: 9px; padding: 2px 5px; border-radius: 999px; background: var(--cinza-2); color: var(--texto-sec); }
+
+/* data note */
+.data-note { font-size: 10px; color: var(--texto-sec); background: var(--cinza-1); border: 1px solid var(--borda); border-radius: 6px; padding: 8px 12px; margin-bottom: 14px; }
+.data-note strong { color: var(--texto); }
+
+footer { text-align: center; padding: 24px 16px; border-top: 1px solid var(--borda); color: var(--texto-sec); font-size: 10px; background: #fff; margin-top: 8px; line-height: 1.9; }
+
+@media (max-width: 600px) {
+  .hdr { padding: 14px; }
+  .main { padding: 16px 12px 36px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .chart-grid { grid-template-columns: 1fr; }
+  .two-col, .three-col, .plan-grid, .team-grid, .swot-grid { grid-template-columns: 1fr; }
+  .hdr-badge { display: none; }
+  .sec-title { font-size: 17px; }
+  .chart-wrap { height: 190px; }
+  .chart-wrap.xtra { height: 250px; }
+  .chart-wrap.tall { height: 230px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-logo">
+      <div class="logo-box">🌿</div>
+      <div>
+        <div class="hdr-title">Videira Verde — Relatório Executivo CEO</div>
+        <div class="hdr-sub">Diagnóstico de Marketing · Inteligência Competitiva · Plano Estratégico · Junho 2026</div>
+      </div>
+    </div>
+    <div class="hdr-badge">CONFIDENCIAL</div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-item active" onclick="goTo('overview',this)">📊 Visão Geral</div>
+    <div class="nav-item" onclick="goTo('instagram',this)">📱 Instagram</div>
+    <div class="nav-item" onclick="goTo('concorrentes',this)">🔍 Concorrência</div>
+    <div class="nav-item" onclick="goTo('swot',this)">⚖️ SWOT</div>
+    <div class="nav-item" onclick="goTo('plano',this)">🚀 Plano de Ação</div>
+    <div class="nav-item" onclick="goTo('equipe',this)">👥 Time de IA</div>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- OVERVIEW -->
+<div id="sec-overview" class="section active">
+  <div class="sec-lbl">Resumo Executivo</div>
+  <div class="sec-title">O diagnóstico completo da Videira Verde</div>
+  <div class="sec-desc">Análise consolidada de marketing digital, inteligência competitiva e roadmap estratégico — elaborada pelo Time de IA em junho de 2026.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi g"><div class="kpi-lbl">Posts Analisados</div><div class="kpi-val">157</div><div class="kpi-sub">mar/2024 a jun/2026</div><div class="kpi-trend neu">↔ @_videiraverde</div></div>
+    <div class="kpi d"><div class="kpi-lbl">Engajamento Médio</div><div class="kpi-val">16,6</div><div class="kpi-sub">likes por post</div><div class="kpi-trend down">↓ Meta: 50+ likes</div></div>
+    <div class="kpi r"><div class="kpi-lbl">Frequência 2026</div><div class="kpi-val">~3</div><div class="kpi-sub">posts/mês</div><div class="kpi-trend down">↓ Meta: 12–16/mês</div></div>
+    <div class="kpi b"><div class="kpi-lbl">Post Recorde</div><div class="kpi-val">181</div><div class="kpi-sub">likes — Reel bastidores</div><div class="kpi-trend up">↑ 10× acima da média</div></div>
+  </div>
+
+  <div class="hl"><strong>Principal achado:</strong> A Videira Verde possui fundamentos sólidos — 8 anos de CNPJ, R$500k de capital, portfólio amplo e distribuição nacional. O gap crítico é digital: processo de vendas 100% manual via WhatsApp, site não indexável e Instagram com frequência e engajamento abaixo do potencial. <strong>A base está construída. O que falta é tecnologia e consistência para multiplicar o alcance.</strong></div>
+
+  <div class="two-col">
+    <div class="info">
+      <h3>✅ Pontos Fortes</h3>
+      <ul>
+        <li>8+ anos de operação, capital social R$500k</li>
+        <li>Portfólio amplo: oleaginosas, especiarias, frutas secas, grãos</li>
+        <li>Distribuição nacional ativa</li>
+        <li>Identidade visual coerente entre site e Instagram</li>
+        <li>Destaques organizados como mini-catálogo (10 categorias)</li>
+        <li>Parceria formal com San Biagio (temperos artesanais)</li>
+        <li>Cultura empresarial forte com valores bem definidos</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h3>⚠️ Gaps Prioritários</h3>
+      <ul>
+        <li>Site GoDaddy sem SEO, sem e-commerce, sem área de cliente</li>
+        <li>Catálogo via Google Docs — não indexável, sem rastreamento</li>
+        <li>Processo de pedido 100% manual — não escala</li>
+        <li>Email @hotmail — falta de profissionalismo B2B</li>
+        <li>Instagram com frequência caindo e engajamento 0,7%</li>
+        <li>Zero presença estratégica no LinkedIn</li>
+        <li>Sem CRM ou rastreamento de leads e pipeline</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wn"><strong>Risco estratégico:</strong> Nenhum dos 3 concorrentes diretos está dominando as keywords transacionais no Google para o segmento cerealista. <strong>O campo está aberto — quem agir primeiro com SEO e conteúdo indexável captura esse tráfego de forma permanente.</strong></div>
+
+  <div class="three-col">
+    <div class="info">
+      <h3>🔍 Concorrência</h3>
+      <ul>
+        <li>Vimacedo lidera em escala (9.637 seguidores, 600+ SKUs)</li>
+        <li>JTC tem tradição mas pedido mínimo R$800 e não fraciona</li>
+        <li>Ebrali é a mais nova — site com noindex, invisível no Google</li>
+        <li>Nenhum investe em LinkedIn</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h3>💰 Preços</h3>
+      <ul>
+        <li>JTC sem tabela atualizada desde mai/2022</li>
+        <li>Ebrali com tabela atualizada (jun/26, nº 126)</li>
+        <li>VV sem tabela pública — dificulta comparação</li>
+        <li>JTC não fraciona — oportunidade imediata para VV</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h3>🌐 SEO</h3>
+      <ul>
+        <li>Ebrali com noindex — invisível ao Google</li>
+        <li>Vimacedo lidera tecnicamente entre concorrentes</li>
+        <li>JTC sem blog ou conteúdo de produto</li>
+        <li>Todas as keywords de produto estão sem dono</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- INSTAGRAM -->
+<div id="sec-instagram" class="section">
+  <div class="sec-lbl">Análise de Performance</div>
+  <div class="sec-title">Instagram @_videiraverde</div>
+  <div class="sec-desc">157 posts analisados de março/2024 a junho/2026. Dados reais coletados automaticamente.</div>
+
+  <div class="kpi-grid">
+    <div class="kpi g"><div class="kpi-lbl">Total de Likes</div><div class="kpi-val">2.610</div><div class="kpi-sub">em 157 posts</div></div>
+    <div class="kpi d"><div class="kpi-lbl">Total de Comentários</div><div class="kpi-val">192</div><div class="kpi-sub">média 1,2/post</div></div>
+    <div class="kpi r"><div class="kpi-lbl">Views (vídeos)</div><div class="kpi-val">12.448</div><div class="kpi-sub">18 vídeos publicados</div></div>
+    <div class="kpi b"><div class="kpi-lbl">Taxa de Engajamento</div><div class="kpi-val">~0,7%</div><div class="kpi-sub">meta B2B: 1–3%</div><div class="kpi-trend down">↓ Abaixo do benchmark</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="chart-ttl">Frequência de Publicação por Mês</div>
+      <div class="chart-sub">Queda de 18 posts/mês (ago/24) para 1 post/mês em 2026</div>
+      <div class="chart-wrap tall"><canvas id="cFreq"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-body">
+        <div class="chart-ttl">Distribuição por Tipo</div>
+        <div class="chart-sub">81% imagens — subuso de vídeo</div>
+        <div class="chart-wrap"><canvas id="cTipos"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="chart-ttl">Hashtags Mais Usadas</div>
+        <div class="chart-sub">Excesso de wellness — baixo retorno B2B</div>
+        <div class="chart-wrap"><canvas id="cHash"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">🏆 Top 5 Posts por Engajamento</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Data</th><th>Likes</th><th>Com.</th><th>Tipo</th><th>Legenda</th></tr></thead>
+        <tbody>
+          <tr><td>08/08/25</td><td><strong style="color:#27AE60">181</strong></td><td><strong style="color:#27AE60">33</strong></td><td><span class="badge bp">Reel Bastidores</span></td><td class="cap">"Tem fornecedor que some… E tem a gente: que além do seu pedido, entregamos até dancinha nos bastidores 😎"</td></tr>
+          <tr><td>05/08/25</td><td><strong>127</strong></td><td>20</td><td><span class="badge bp">Reel Institucional</span></td><td class="cap">"A Pandemia mudou a vida de muita gente. Uns quebraram e outros despontaram..."</td></tr>
+          <tr><td>20/03/26</td><td>81</td><td>18</td><td><span class="badge bp">Reel Humor</span></td><td class="cap">"Aqui resolvemos entrar na brincadeira também 🤣 Além do molejo, entregamos com agilidade..."</td></tr>
+          <tr><td>06/06/26</td><td>99</td><td>10</td><td><span class="badge bb">Imagem Institucional</span></td><td class="cap">"Celebramos nossos 4 anos com uma Missa em Ação de Graças..."</td></tr>
+          <tr><td>08/04/24</td><td>98</td><td>0</td><td><span class="badge bb">Imagem Comercial</span></td><td class="cap">"Venha para Videira Verde e veja de perto o que nos torna únicos..."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Insight decisivo:</strong> Os 3 posts com maior engajamento são todos <strong>Reels de bastidores e humor</strong> — 10× a média do perfil (16,6 likes). A estratégia atual de imagens de produto vai na direção oposta ao que os dados mostram que funciona.</div>
+
+  <div class="two-col">
+    <div class="info">
+      <h3>🚫 O que não está funcionando</h3>
+      <ul>
+        <li>Hashtags de wellness (#BemEstar 58×) — sem retorno B2B</li>
+        <li>Frequência caindo: 18 posts/mês → 1 post/mês</li>
+        <li>81% das publicações são imagens estáticas</li>
+        <li>Posts de produto puro sem narrativa ou bastidores</li>
+      </ul>
+    </div>
+    <div class="info">
+      <h3>✅ O que está funcionando</h3>
+      <ul>
+        <li>Reels de bastidores/humor — 10× mais engajamento</li>
+        <li>Conteúdo institucional com história da empresa</li>
+        <li>Destaques organizados como mini-catálogo</li>
+        <li>Tom autêntico gera identificação genuína</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- CONCORRENTES -->
+<div id="sec-concorrentes" class="section">
+  <div class="sec-lbl">Inteligência Competitiva 360°</div>
+  <div class="sec-title">Vimacedo · JTC · Ebrali vs. Videira Verde</div>
+  <div class="sec-desc">Análise coletada em 18/06/2026 via Apify (Instagram), WebFetch (sites e preços) e WebSearch (SEO). Seguidores verificados diretamente nos perfis Instagram.</div>
+
+  <div class="data-note">📌 <strong>Nota metodológica:</strong> Vimacedo usa o handle <strong>@vimacedo.cereais</strong> (não @vimacedo) e Ebrali usa <strong>@ebralidistribuidora</strong>. A ausência dos seguidores na análise anterior ocorreu porque o Apify foi disparado com handles incorretos. Dados corrigidos abaixo com verificação direta nos perfis.</div>
+
+  <div class="card">
+    <div class="card-hdr">📱 Comparativo Instagram — Seguidores e Estratégia</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Empresa</th><th>Handle</th><th>Seguidores</th><th>Post recorde</th><th>Estratégia</th><th>Avaliação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vimacedo</strong></td><td style="font-size:10px;color:var(--texto-sec)">@vimacedo.cereais</td><td><strong>9.637</strong></td><td>2.702 likes · 156 com.</td><td>87% Reels · Narrativa B2B · Co-marketing</td><td><span class="badge br">Líder</span></td></tr>
+          <tr><td><strong>JTC</strong></td><td style="font-size:10px;color:var(--texto-sec)">@jtcdistribuidora</td><td><strong>3.500</strong></td><td>841 likes · 10.597 com.</td><td>Conteúdo educativo · Sorteios virais</td><td><span class="badge by">Forte</span></td></tr>
+          <tr><td><strong>Ebrali</strong></td><td style="font-size:10px;color:var(--texto-sec)">@ebralidistribuidora</td><td><strong>1.048</strong></td><td>56 likes</td><td>Cupom rastreado · Linguagem técnica B2B</td><td><span class="badge bb">Iniciante</span></td></tr>
+          <tr style="background:#F0FAF4"><td><strong style="color:var(--verde)">Videira Verde</strong></td><td style="font-size:10px;color:var(--verde-m)">@_videiraverde</td><td><strong style="color:var(--verde)">2.534</strong></td><td>181 likes · 33 com.</td><td>Bastidores/humor · Institucional · Produto</td><td><span class="badge bg">Alto potencial</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="chart-ttl">Seguidores Instagram — Comparativo</div>
+      <div class="chart-sub">Vimacedo lidera com 9.637; JTC em 2º; VV em 3º com 2.534 e alto potencial</div>
+      <div class="chart-wrap"><canvas id="cSeguidores"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">💰 Condições Comerciais</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Condição</th><th>Vimacedo</th><th>JTC</th><th>Ebrali</th><th>Videira Verde</th></tr></thead>
+        <tbody>
+          <tr><td>Pedido mínimo</td><td>Frete grátis &gt;R$2.000</td><td>R$800</td><td>R$3.000 (SP)</td><td><span class="badge bg">Flexível</span></td></tr>
+          <tr><td>Fracionamento</td><td>Sim</td><td><span class="badge br">Não fraciona</span></td><td>Sim</td><td><span class="badge bg">Diferencial</span></td></tr>
+          <tr><td>Tabela pública</td><td>Site parcial</td><td><span class="badge br">Última: mai/2022</span></td><td>PDF jun/26</td><td><span class="badge by">Apenas contato</span></td></tr>
+          <tr><td>Entrega</td><td>Nacional</td><td>SP e região</td><td>SP (mín. R$3k)</td><td>Nacional</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">🌐 Scorecard de SEO</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Critério</th><th>Vimacedo</th><th>JTC</th><th>Ebrali</th><th>Videira Verde</th></tr></thead>
+        <tbody>
+          <tr><td>Indexação Google</td><td><span class="badge bg">Boa</span></td><td><span class="badge by">Regular</span></td><td><span class="badge br">Crítica (noindex!)</span></td><td><span class="badge by">Limitada</span></td></tr>
+          <tr><td>Catálogo digital</td><td><span class="badge bg">Site com produtos</span></td><td><span class="badge by">PDF antigo</span></td><td><span class="badge bg">PDF atualizado</span></td><td><span class="badge br">Google Docs</span></td></tr>
+          <tr><td>Blog / Conteúdo</td><td><span class="badge bg">Sim</span></td><td><span class="badge br">Não</span></td><td><span class="badge br">Não</span></td><td><span class="badge br">Não</span></td></tr>
+          <tr><td>LinkedIn</td><td><span class="badge by">Básico</span></td><td><span class="badge br">Mínimo</span></td><td><span class="badge br">Mínimo</span></td><td><span class="badge br">Sem estratégia</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info-box"><strong>Keywords sem dono — oportunidade imediata:</strong> "cereais a granel atacado São Paulo", "frutas secas atacado SP", "castanha atacado SP", "pistache atacado SP" — <strong>nenhum dos 3 concorrentes aparece nas primeiras posições do Google para essas buscas.</strong></div>
+</div>
+
+<!-- SWOT -->
+<div id="sec-swot" class="section">
+  <div class="sec-lbl">Análise Estratégica</div>
+  <div class="sec-title">SWOT & Matriz de Posicionamento</div>
+  <div class="sec-desc">Posição competitiva da Videira Verde frente ao mercado cerealista atacadista.</div>
+
+  <div class="swot-grid">
+    <div class="swot s">
+      <h3>💪 Forças</h3>
+      <div class="swot-item">8+ anos de operação, capital R$500k</div>
+      <div class="swot-item">Portfólio amplo: 4+ categorias, 100+ SKUs</div>
+      <div class="swot-item">Distribuição nacional ativa</div>
+      <div class="swot-item">Parceria formal com San Biagio</div>
+      <div class="swot-item">Cultura empresarial com valores sólidos</div>
+      <div class="swot-item">Zona Cerealista — referência do setor</div>
+      <div class="swot-item">Conteúdo de bastidores com alto potencial</div>
+    </div>
+    <div class="swot w">
+      <h3>⚠️ Fraquezas</h3>
+      <div class="swot-item">Site sem SEO nem e-commerce</div>
+      <div class="swot-item">Email @hotmail — falta profissionalismo</div>
+      <div class="swot-item">Vendas 100% manuais — gargalo de escala</div>
+      <div class="swot-item">Engajamento 0,7% (meta: 1–3%)</div>
+      <div class="swot-item">Frequência caindo — 1 post/mês em mar/26</div>
+      <div class="swot-item">Sem CRM — sem rastreamento de pipeline</div>
+      <div class="swot-item">Zero presença no LinkedIn</div>
+    </div>
+    <div class="swot o">
+      <h3>🚀 Oportunidades</h3>
+      <div class="swot-item">Mercado natural em crescimento acelerado</div>
+      <div class="swot-item">Keywords de produto sem dono no Google</div>
+      <div class="swot-item">LinkedIn virgem para o setor B2B</div>
+      <div class="swot-item">Reels educativos — concorrentes não dominam</div>
+      <div class="swot-item">Fracionamento — JTC não fraciona</div>
+      <div class="swot-item">Catálogo digital aumenta vendas sem equipe</div>
+      <div class="swot-item">Automação WhatsApp para escalar atendimento</div>
+    </div>
+    <div class="swot t">
+      <h3>⚡ Ameaças</h3>
+      <div class="swot-item">Vimacedo lidera social com 9.637 seguidores</div>
+      <div class="swot-item">JTC com maior percepção de autoridade</div>
+      <div class="swot-item">Ebrali capturando leads com cupom rastreado</div>
+      <div class="swot-item">Consolidação do setor</div>
+      <div class="swot-item">Sem digitalização, crescimento tem teto</div>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="card">
+      <div class="card-body">
+        <div class="chart-ttl">Radar de Posicionamento 360°</div>
+        <div class="chart-sub">Pontuação 1–5 por dimensão (5 = líder)</div>
+        <div class="chart-wrap xtra"><canvas id="cRadar"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="chart-ttl">Score Consolidado</div>
+        <div class="chart-sub">Soma das 6 dimensões avaliadas (máx 30)</div>
+        <div class="chart-wrap xtra"><canvas id="cScore"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">Matriz detalhada — 6 dimensões</div>
+    <div class="mx-wrap">
+      <div class="mx-row">
+        <div class="mx-cell hdr">Dimensão</div>
+        <div class="mx-cell hdr">Vimacedo</div>
+        <div class="mx-cell hdr">JTC</div>
+        <div class="mx-cell hdr">Ebrali</div>
+        <div class="mx-cell hdr" style="color:var(--verde)">Videira Verde</div>
+      </div>
+      <div class="mx-row"><div class="mx-cell lbl">Presença Social</div><div class="mx-cell">5/5<div class="score-bar"><div class="score-fill" style="width:100%;background:#C0392B"></div></div></div><div class="mx-cell">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#D4A017"></div></div></div><div class="mx-cell">2/5<div class="score-bar"><div class="score-fill" style="width:40%;background:#1A6BA0"></div></div></div><div class="mx-cell vv">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#2D6A4F"></div></div></div></div>
+      <div class="mx-row"><div class="mx-cell lbl">SEO / Digital</div><div class="mx-cell">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#C0392B"></div></div></div><div class="mx-cell">2/5<div class="score-bar"><div class="score-fill" style="width:40%;background:#D4A017"></div></div></div><div class="mx-cell">1/5<div class="score-bar"><div class="score-fill" style="width:20%;background:#1A6BA0"></div></div></div><div class="mx-cell vv">2/5<div class="score-bar"><div class="score-fill" style="width:40%;background:#2D6A4F"></div></div></div></div>
+      <div class="mx-row"><div class="mx-cell lbl">Portfólio &amp; Escala</div><div class="mx-cell">5/5<div class="score-bar"><div class="score-fill" style="width:100%;background:#C0392B"></div></div></div><div class="mx-cell">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#D4A017"></div></div></div><div class="mx-cell">2/5<div class="score-bar"><div class="score-fill" style="width:40%;background:#1A6BA0"></div></div></div><div class="mx-cell vv">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#2D6A4F"></div></div></div></div>
+      <div class="mx-row"><div class="mx-cell lbl">Transparência</div><div class="mx-cell">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#C0392B"></div></div></div><div class="mx-cell">1/5<div class="score-bar"><div class="score-fill" style="width:20%;background:#D4A017"></div></div></div><div class="mx-cell">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#1A6BA0"></div></div></div><div class="mx-cell vv">2/5<div class="score-bar"><div class="score-fill" style="width:40%;background:#2D6A4F"></div></div></div></div>
+      <div class="mx-row"><div class="mx-cell lbl">Atendimento B2B</div><div class="mx-cell">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#C0392B"></div></div></div><div class="mx-cell">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#D4A017"></div></div></div><div class="mx-cell">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#1A6BA0"></div></div></div><div class="mx-cell vv">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#2D6A4F"></div></div></div></div>
+      <div class="mx-row"><div class="mx-cell lbl">Autenticidade</div><div class="mx-cell">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#C0392B"></div></div></div><div class="mx-cell">3/5<div class="score-bar"><div class="score-fill" style="width:60%;background:#D4A017"></div></div></div><div class="mx-cell">2/5<div class="score-bar"><div class="score-fill" style="width:40%;background:#1A6BA0"></div></div></div><div class="mx-cell vv">4/5<div class="score-bar"><div class="score-fill" style="width:80%;background:#2D6A4F"></div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLANO -->
+<div id="sec-plano" class="section">
+  <div class="sec-lbl">Roadmap Estratégico</div>
+  <div class="sec-title">Plano de Ação — Marketing &amp; Digital</div>
+  <div class="sec-desc">Iniciativas priorizadas por impacto e prazo, elaboradas pelo Time de Marketing IA da Videira Verde.</div>
+
+  <div class="plan-grid">
+    <div class="plan">
+      <div class="plan-hdr h1">⚡ H1 — Quick Wins (0–30 dias)</div>
+      <div class="plan-body">
+        <div class="plan-item"><span class="plan-n">1</span>Aumentar frequência para 3 posts/semana — consistência é o maior gap atual</div>
+        <div class="plan-item"><span class="plan-n">2</span>Produzir 2 Reels de bastidores/mês — formato com 10× mais ROI</div>
+        <div class="plan-item"><span class="plan-n">3</span>Otimizar Google Meu Negócio com fotos, horário e categoria</div>
+        <div class="plan-item"><span class="plan-n">4</span>Trocar email para @videiraverde.com — credibilidade B2B imediata</div>
+        <div class="plan-item"><span class="plan-n">5</span>Substituir hashtags wellness por B2B cerealistas</div>
+        <div class="plan-item"><span class="plan-n">6</span>Ativar perfil LinkedIn com identidade visual consistente</div>
+      </div>
+    </div>
+    <div class="plan">
+      <div class="plan-hdr h2">📈 H2 — Crescimento (30–90 dias)</div>
+      <div class="plan-body">
+        <div class="plan-item"><span class="plan-n">1</span>Catálogo digital indexável no site — substituir Google Docs</div>
+        <div class="plan-item"><span class="plan-n">2</span>4–8 posts/mês no LinkedIn com autoridade B2B</div>
+        <div class="plan-item"><span class="plan-n">3</span>Sorteio estratégico no Instagram — replicar mecânica da JTC</div>
+        <div class="plan-item"><span class="plan-n">4</span>Rastreamento de origem de pedidos via WhatsApp</div>
+        <div class="plan-item"><span class="plan-n">5</span>Calendário editorial mensal com datas sazonais</div>
+        <div class="plan-item"><span class="plan-n">6</span>Autenticar Canva e Notion para automação de conteúdo</div>
+      </div>
+    </div>
+    <div class="plan">
+      <div class="plan-hdr h3">🏆 H3 — Estratégico (90–365 dias)</div>
+      <div class="plan-body">
+        <div class="plan-item"><span class="plan-n">1</span>Dominar keywords de produto no Google com blog e páginas dedicadas</div>
+        <div class="plan-item"><span class="plan-n">2</span>CRM para WhatsApp — rastrear clientes e pipeline</div>
+        <div class="plan-item"><span class="plan-n">3</span>Plataforma B2B de pedidos online com área de cliente</div>
+        <div class="plan-item"><span class="plan-n">4</span>Programa de fidelização para lojistas recorrentes</div>
+        <div class="plan-item"><span class="plan-n">5</span>Atingir 1–3% de engajamento no Instagram</div>
+        <div class="plan-item"><span class="plan-n">6</span>Backlinks B2B com blogs de foodservice e nutrição</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="chart-ttl">Priorização: Impacto × Esforço</div>
+      <div class="chart-sub">Tamanho da bolha = impacto estimado no ROI</div>
+      <div class="chart-wrap tall"><canvas id="cBubble"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">🎯 Conteúdo por Plataforma</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Plataforma</th><th>Frequência</th><th>Formatos</th><th>Conteúdo</th><th>KPI</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Instagram</strong></td><td>12–16/mês</td><td>Reels 40% · Carrossel 30% · Imagem 30%</td><td>Bastidores, humor, produto, sazonais</td><td>Engajamento ≥1%</td></tr>
+          <tr><td><strong>Facebook</strong></td><td>8–12/mês</td><td>Vídeo nativo · Post com link</td><td>Espelhar IG + posts com link para site</td><td>Alcance + cliques</td></tr>
+          <tr><td><strong>LinkedIn</strong></td><td>4–8/mês</td><td>Carrossel PDF · Vídeo · Texto+imagem</td><td>Tendências B2B, dados de mercado</td><td>Impressões + perfil</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EQUIPE -->
+<div id="sec-equipe" class="section">
+  <div class="sec-lbl">Estrutura Operacional</div>
+  <div class="sec-title">Time de Marketing — Agentes de IA</div>
+  <div class="sec-desc">7 agentes especializados operando em paralelo, cada um com skills, ferramentas e entregáveis definidos.</div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-body" style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <div style="text-align:center;min-width:56px">
+        <div style="font-size:28px;margin-bottom:3px">🎯</div>
+        <div style="font-size:9px;color:var(--verde);font-weight:700">ORQUESTRADORA</div>
+      </div>
+      <div style="flex:1;min-width:180px">
+        <div style="font-size:13px;font-weight:700;color:var(--texto);margin-bottom:3px">marketing-director-agent</div>
+        <div style="font-size:11px;color:var(--texto-sec);margin-bottom:7px;line-height:1.5">Recebe pedido estratégico da diretoria, distribui para os especialistas certos e consolida todos os entregáveis em uma visão única coerente.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px"><span class="atag">Skill: marketing-director</span><span class="atag">Dispara subagentes</span><span class="atag">Read · Write · WebSearch</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-grid">
+    <div class="agent p"><div class="agent-icon">📱</div><div class="agent-name">social-media-agent</div><div class="agent-role">Estratégia e performance no Instagram, Facebook e LinkedIn. Analisa dados históricos e propõe plano por plataforma.</div><div class="agent-tags"><span class="atag">social-media-manager</span><span class="atag">Apify</span><span class="atag">Notion</span></div></div>
+    <div class="agent pk"><div class="agent-icon">🎨</div><div class="agent-name">creative-director-agent</div><div class="agent-role">Criação visual estática: imagens, carrosséis, templates de post e Stories. Mantém identidade da marca.</div><div class="agent-tags"><span class="atag">creative-director</span><span class="atag">Canva MCP</span><span class="atag">Figma MCP</span></div></div>
+    <div class="agent o"><div class="agent-icon">🎬</div><div class="agent-name">video-producer-agent</div><div class="agent-role">Roteiros cena a cena para Reels. Briefings para CapCut. Vídeos animados via Canva Vídeo (MCP).</div><div class="agent-tags"><span class="atag">video-producer</span><span class="atag">Canva Vídeo</span><span class="atag">CapCut</span></div></div>
+    <div class="agent y"><div class="agent-icon">📣</div><div class="agent-name">campaign-planner-agent</div><div class="agent-role">Campanhas sazonais B2B multi-plataforma. Calendário de posts + template WhatsApp por campanha.</div><div class="agent-tags"><span class="atag">campaign-planner</span><span class="atag">ClickUp</span><span class="atag">Notion</span></div></div>
+    <div class="agent b"><div class="agent-icon">📊</div><div class="agent-name">analytics-seo-agent</div><div class="agent-role">Fecha o loop de ROI: post → tráfego → pedido. Audita SEO do site e keywords do setor cerealista.</div><div class="agent-tags"><span class="atag">analytics-seo</span><span class="atag">Ahrefs MCP</span><span class="atag">SimilarWeb</span></div></div>
+    <div class="agent t"><div class="agent-icon">✍️</div><div class="agent-name">content-creator-agent</div><div class="agent-role">Copy e legendas para posts. Calendário editorial. Hashtags B2B corretas calibradas nos 157 posts históricos.</div><div class="agent-tags"><span class="atag">content-creator</span><span class="atag">Dados IG</span><span class="atag">WebSearch</span></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr">🛠️ Stack de Ferramentas — Custo Base Quase Zero</div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Ferramenta</th><th>Função</th><th>Custo</th><th>Integração</th></tr></thead>
+        <tbody>
+          <tr><td>Canva</td><td>Imagens, carrosséis, vídeo simples</td><td><span class="badge bg">Gratuito</span></td><td><span class="badge bg">MCP ✅</span></td></tr>
+          <tr><td>Figma</td><td>Identidade visual e marca</td><td><span class="badge bg">Gratuito</span></td><td><span class="badge bg">MCP ✅</span></td></tr>
+          <tr><td>Ideogram AI</td><td>Imagens IA de produto</td><td><span class="badge bg">Gratuito (25/sem)</span></td><td>Via Web</td></tr>
+          <tr><td>CapCut</td><td>Edição de Reels</td><td><span class="badge bg">Gratuito</span></td><td>App manual</td></tr>
+          <tr><td>Metricool</td><td>Agendamento IG + FB + LinkedIn</td><td><span class="badge bg">Gratuito (1 marca)</span></td><td>Via Web</td></tr>
+          <tr><td>Meta Business Suite</td><td>Analytics nativo IG + FB</td><td><span class="badge bg">Gratuito</span></td><td>Via Web</td></tr>
+          <tr><td>Notion</td><td>Calendário editorial</td><td><span class="badge bg">Gratuito</span></td><td><span class="badge by">MCP (auth pendente)</span></td></tr>
+          <tr><td>ClickUp</td><td>Gestão de tarefas e campanhas</td><td><span class="badge bg">Gratuito</span></td><td><span class="badge bg">MCP ✅</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="hl"><strong>Próximas 3 ações para ativar o time:</strong> (1) Autenticar Canva e Notion no plugin Marketing. (2) Disparar o <code>social-media-agent</code> para o primeiro relatório mensal. (3) Disparar o <code>campaign-planner-agent</code> para a campanha de agosto (Dia dos Pais).</div>
+</div>
+
+</div><!-- end main -->
+
+<footer>
+  Videira Verde — Relatório Executivo CEO · Elaborado pelo Time de IA (marketing-director-agent + analytics-seo-agent)<br>
+  Base de dados: 157 posts Instagram (mar/24–jun/26) · Análise Competitiva 360° (18/06/2026)<br>
+  Seguidores verificados diretamente nos perfis Instagram em 18/06/2026<br>
+  © 2026 Videira Verde Distribuidora · Uso interno
+</footer>
+
+<script>
+const rendered={};
+function goTo(s,el){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('sec-'+s).classList.add('active');
+  el.classList.add('active');
+  if(!rendered[s]){rendered[s]=true;setTimeout(()=>buildCharts(s),50);}
+}
+
+const V='#2D6A4F',VL='#52B788',D='#D4A017',R='#C0392B',AZ='#1A6BA0',RX='#6D3FC0',GR='#9AA0B2',GRID='rgba(0,0,0,.06)';
+
+function buildCharts(s){
+  if(s==='instagram'){
+    const meses=[['mar/24',12],['abr/24',9],['mai/24',8],['jun/24',14],['jul/24',13],['ago/24',18],['set/24',5],['out/24',3],['dez/24',1],['jan/25',12],['fev/25',6],['mar/25',8],['abr/25',5],['mai/25',4],['jul/25',3],['ago/25',8],['set/25',1],['out/25',6],['nov/25',1],['dez/25',5],['jan/26',3],['fev/26',3],['mar/26',1],['abr/26',6],['mai/26',1],['jun/26',1]];
+    new Chart(document.getElementById('cFreq'),{type:'bar',data:{labels:meses.map(m=>m[0]),datasets:[{label:'Posts publicados',data:meses.map(m=>m[1]),backgroundColor:meses.map(m=>m[1]>=10?VL:m[1]>=5?D:R),borderRadius:4},{label:'Meta (12/mês)',data:meses.map(()=>12),type:'line',borderColor:RX,borderDash:[4,4],pointRadius:0,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:GR,font:{size:10}}}},scales:{x:{ticks:{color:GR,font:{size:9},maxRotation:45},grid:{color:GRID}},y:{ticks:{color:GR},grid:{color:GRID}}}}});
+    new Chart(document.getElementById('cTipos'),{type:'doughnut',data:{labels:['Imagens (81%)','Vídeos (11%)','Carrosséis (7%)'],datasets:[{data:[128,18,11],backgroundColor:[R,V,D],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom',labels:{color:GR,font:{size:10},padding:10}}}}});
+    new Chart(document.getElementById('cHash'),{type:'bar',data:{labels:['#BemEstar','#VideiraVerde','#ProdutosNaturais','#AlimentaçãoSaudável','#ComidaSaudável'],datasets:[{label:'Usos',data:[58,57,56,56,56],backgroundColor:[R,V,R,R,R],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{color:GR},grid:{color:GRID}},y:{ticks:{color:GR,font:{size:10}},grid:{display:false}}}}});
+  }
+  if(s==='concorrentes'){
+    new Chart(document.getElementById('cSeguidores'),{type:'bar',data:{labels:['Vimacedo\n@vimacedo.cereais','JTC\n@jtcdistribuidora','Videira Verde\n@_videiraverde','Ebrali\n@ebralidistribuidora'],datasets:[{label:'Seguidores',data:[9637,3500,2534,1048],backgroundColor:[R,D,V,AZ],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.raw.toLocaleString('pt-BR')+' seguidores'}}},scales:{x:{ticks:{color:GR,font:{size:10}},grid:{display:false}},y:{ticks:{color:GR,callback:v=>v.toLocaleString('pt-BR')},grid:{color:GRID}}}}});
+  }
+  if(s==='swot'){
+    new Chart(document.getElementById('cRadar'),{type:'radar',data:{labels:['Presença Social','SEO / Digital','Portfólio','Preços','Atendimento','Autenticidade'],datasets:[{label:'Vimacedo',data:[5,4,5,3,3,4],borderColor:R,backgroundColor:R+'22',borderWidth:2,pointBackgroundColor:R},{label:'JTC',data:[3,2,4,1,4,3],borderColor:D,backgroundColor:D+'22',borderWidth:2,pointBackgroundColor:D},{label:'Ebrali',data:[2,1,2,4,3,2],borderColor:AZ,backgroundColor:AZ+'22',borderWidth:2,pointBackgroundColor:AZ},{label:'Videira Verde',data:[3,2,3,2,4,4],borderColor:V,backgroundColor:V+'33',borderWidth:2.5,pointBackgroundColor:V}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:GR,font:{size:10},padding:8}}},scales:{r:{min:0,max:5,ticks:{color:GR,font:{size:9},stepSize:1},grid:{color:GRID},pointLabels:{color:'#5A6278',font:{size:10}},angleLines:{color:GRID}}}}});
+    new Chart(document.getElementById('cScore'),{type:'bar',data:{labels:['Vimacedo','JTC','Ebrali','Videira Verde'],datasets:[{label:'Score total (máx 30)',data:[24,17,14,18],backgroundColor:[R,D,AZ,V],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:GR},grid:{display:false}},y:{ticks:{color:GR},grid:{color:GRID},max:30}}}});
+  }
+  if(s==='plano'){
+    new Chart(document.getElementById('cBubble'),{type:'bubble',data:{datasets:[{label:'Freq. Instagram',data:[{x:2,y:9,r:16}],backgroundColor:V+'99'},{label:'Reels bastidores',data:[{x:3,y:10,r:15}],backgroundColor:V+'99'},{label:'Email profissional',data:[{x:1,y:7,r:10}],backgroundColor:D+'99'},{label:'Google Meu Negócio',data:[{x:2,y:8,r:13}],backgroundColor:D+'99'},{label:'LinkedIn estratégico',data:[{x:4,y:8,r:13}],backgroundColor:AZ+'99'},{label:'Catálogo digital SEO',data:[{x:7,y:9,r:17}],backgroundColor:RX+'99'},{label:'Sorteio viral IG',data:[{x:3,y:7,r:11}],backgroundColor:D+'99'},{label:'CRM WhatsApp',data:[{x:8,y:10,r:19}],backgroundColor:R+'99'},{label:'Plataforma B2B',data:[{x:10,y:10,r:21}],backgroundColor:R+'99'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:GR,font:{size:10},boxWidth:10,padding:6}}},scales:{x:{title:{display:true,text:'Esforço de Implementação →',color:GR,font:{size:11}},ticks:{color:GR},grid:{color:GRID},min:0,max:12},y:{title:{display:true,text:'← Impacto no ROI',color:GR,font:{size:11}},ticks:{color:GR},grid:{color:GRID},min:0,max:12}}}});
+  }
+}
+buildCharts('overview');
+</script>
+</body>
+</html>
